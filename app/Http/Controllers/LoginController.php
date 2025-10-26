@@ -13,7 +13,7 @@ class LoginController extends Controller
         $credentials = $request->validated();
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->intended('eventos');
         }
 
         return back()->withErrors([
