@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\CategoriaController;
 
 
 Route::group(['middleware' => ['guest']], function () {
@@ -54,4 +55,16 @@ Route::group(['middleware' => ['authUser']], function () {
     Route::get('/contactos/{contacto}/edit', [ContactoController::class, 'edit'])->name('contactos.edit');
     Route::put('/contactos/{contacto}', [ContactoController::class, 'update'])->name('contactos.update');
     Route::delete('/contactos/{contacto}', [ContactoController::class, 'destroy'])->name('contactos.destroy');
+});
+
+Route::group(['middleware' => ['authUser']], function () {
+    
+    //Categorías
+    Route::get('/categorias', [CategoriaController::class, 'index'])->name('categorias.index');
+    Route::get('/categorias/create', [CategoriaController::class, 'create'])->name('categorias.create');
+    Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
+    Route::get('/categorias/{categoria}', [CategoriaController::class, 'show'])->name('categorias.show');
+    Route::get('/categorias/{categoria}/edit', [CategoriaController::class, 'edit'])->name('categorias.edit');
+    Route::put('/categorias/{categoria}', [CategoriaController::class, 'update'])->name('categorias.update');
+    Route::delete('/categorias/{categoria}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
 });

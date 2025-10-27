@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Categorías</title>
+    <style>
+        body { font-family: Arial; max-width: 1000px; margin: 30px auto; padding: 20px; background: #f5f5f5; }
+        .container { background: white; padding: 30px; border-radius: 8px; }
+        h1 { color: #333; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; margin-bottom: 20px; border: none; border-radius: 4px; text-decoration: none; display: inline-block; background: #007bff; color: white; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f8f9fa; font-weight: bold; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; background: #d4edda; color: #155724; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; margin-right: 5px; border-radius: 3px; border: none; cursor: pointer; }
+        .btn-info { background: #17a2b8; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+        .btn-danger { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Categorías</h1>
+        <button onclick="mostrarFormulario()" class="btn">+ Nueva Categoría</button>
+        
+        <div id="formulario" style="display:none; background:#f8f9fa; padding:20px; margin-bottom:20px; border-radius:5px;">
+            <h3 id="tituloForm">Crear Categoría</h3>
+            <input type="hidden" id="editId">
+            <div style="margin-bottom:10px;">
+                <label>Nombre:</label><br>
+                <input type="text" id="nombre" style="width:100%; padding:8px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label>Descripción:</label><br>
+                <input type="text" id="descripcion" style="width:100%; padding:8px;">
+            </div>
+            <div style="margin-bottom:10px;">
+                <label><input type="checkbox" id="activo" checked> Activo</label>
+            </div>
+            <button onclick="guardar()" class="btn" style="background:#28a745;">Guardar</button>
+            <button onclick="cancelar()" class="btn" style="background:#6c757d;">Cancelar</button>
+        </div>
+        
+        <table>
+            <thead>
+                <tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Estado</th><th>Acciones</th></tr>
+            </thead>
+            <tbody id="tablaCategorias">
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        let categorias = [];
+        let nextId = 1;
+        
+        function mostrarFormulario() {
+            document.getElementById("formulario").style.display = "block";
+            document.getElementById("tituloForm").textContent = "Crear Categoría";
+            document.getElementById("editId").value = "";
+            document.getElementById("nombre").value = "";
+            document.getElementById("descripcion").value = "";
+            document.getElementById("activo").checked = true;
+        }
+        
+        function cancelar() {
+            document.getElementById("formulario").style.display = "none";
+        }
+        
+        function guardar() {
+            const nombre = document.getElementById("nombre").value;
+            const descripcion = document.getElementById("descripcion").value;
+            const activo = document.getElementById("activo").checked;
+            const editId = document.getElementById("editId").value;
+            
+            if (!nombre) {
+                alert("El nombre es obligatorio");
+                return;
+            }
+            
+            if (editId) {
+                // Editar
+                const cat = categorias.find(c => c.id == editId);
+                cat.nombre = nombre;
+                cat.descripcion = descripcion;
+                cat.activo = activo;
+                alert("Categoría actualizada");
+            } else {
+                // Crear
+                categorias.push({
+                    id: nextId++,
+                    nombre: nombre,
+                    descripcion: descripcion,
+                    activo: activo
+                });
+                alert("Categoría creada");
+            }
+            
+            cancelar();
+            renderizar();
+        }
+        
+        function visualizar(id) {
+            const cat = categorias.find(c => c.id == id);
+            let msg = "ID: " + cat.id + "\n";
+            msg += "Nombre: " + cat.nombre + "\n";
+            msg += "Descripción: " + cat.descripcion + "\n";
+            msg += "Estado: " + (cat.activo ? "Activo" : "Inactivo");
+            alert(msg);
+        }
+        
+        function editar(id) {
+            const cat = categorias.find(c => c.id == id);
+            document.getElementById("formulario").style.display = "block";
+            document.getElementById("tituloForm").textContent = "Editar Categoría";
+            document.getElementById("editId").value = cat.id;
+            document.getElementById("nombre").value = cat.nombre;
+            document.getElementById("descripcion").value = cat.descripcion;
+            document.getElementById("activo").checked = cat.activo;
+        }
+        
+        function borrar(id) {
+            if (confirm("¿Eliminar esta categoría?")) {
+                categorias = categorias.filter(c => c.id != id);
+                alert("Categoría eliminada");
+                renderizar();
+            }
+        }
+        
+        function renderizar() {
+            const tbody = document.getElementById("tablaCategorias");
+            tbody.innerHTML = "";
+            
+            if (categorias.length === 0) {
+                tbody.innerHTML = "<tr><td colspan=\"5\" style=\"text-align:center; color:#999;\">No hay categorías. Crea una nueva.</td></tr>";
+                return;
+            }
+            
+            categorias.forEach(cat => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${cat.id}</td>
+                    <td><strong>${cat.nombre}</strong></td>
+                    <td>${cat.descripcion}</td>
+                    <td><span class="badge">${cat.activo ? "Activo" : "Inactivo"}</span></td>
+                    <td>
+                        <button onclick="visualizar(${cat.id})" class="btn-sm btn-info">Ver</button>
+                        <button onclick="editar(${cat.id})" class="btn-sm btn-warning">Editar</button>
+                        <button onclick="borrar(${cat.id})" class="btn-sm btn-danger">Borrar</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+        
+        // Inicializar
+        renderizar();
+    </script>
+</body>
+</html>

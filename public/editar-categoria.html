@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Categoría</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        textarea {
+            height: 80px;
+        }
+        
+        .buttons {
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: #ffc107;
+            color: black;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .back {
+            margin-bottom: 20px;
+        }
+        
+        .back a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back">
+            <a href="demo-categorias.html">← Volver</a>
+        </div>
+        
+        <h1>Editar Categoría</h1>
+        
+        <form onsubmit="actualizar(event)">
+            <div class="form-group">
+                <label>Nombre *</label>
+                <input type="text" id="nombre" value="Electrónica" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea id="descripcion">Productos electrónicos y tecnología</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>Categoría Padre</label>
+                <select id="padre">
+                    <option value="">-- Ninguna --</option>
+                    <option value="4">Ropa y Moda</option>
+                    <option value="7">Hogar y Jardín</option>
+                    <option value="8">Deportes</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="activo" checked> Activo
+                </label>
+            </div>
+            
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+                <a href="demo-categorias.html" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        function actualizar(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            alert('Categoría "' + nombre + '" actualizada!');
+            window.location.href = 'demo-categorias.html';
+        }
+    </script>
+</body>
+</html>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #F59E0B;
+            padding-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            margin-bottom: 30px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .breadcrumb a {
+            color: #3B82F6;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+        
+        .required {
+            color: #EF4444;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #F59E0B;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-wrapper label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-warning {
+            background: #F59E0B;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #D97706;
+        }
+        
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+        
+        .color-picker-wrapper {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        input[type="color"] {
+            width: 80px;
+            height: 45px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #color_text {
+            flex: 1;
+            background: #f9fafb;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-info {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+            color: #92400E;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .info-card {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3B82F6;
+        }
+        
+        .info-card h3 {
+            margin-bottom: 10px;
+            color: #1f2937;
+            font-size: 14px;
+        }
+        
+        .info-card p {
+            margin: 5px 0;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="demo-categorias.html">← Volver al listado</a>
+        </div>
+        
+        <h1>Editar Categoría</h1>
+        
+        <div class="alert alert-info">
+            Los campos marcados con <span class="required">*</span> son obligatorios
+        </div>
+        
+        <div class="info-card">
+            <h3>📊 Información de la categoría</h3>
+            <p><strong>ID:</strong> 1</p>
+            <p><strong>Creada:</strong> 26/10/2025 21:42</p>
+            <p><strong>Última actualización:</strong> 26/10/2025 21:42</p>
+        </div>
+        
+        <form id="categoriaForm" onsubmit="actualizarCategoria(event)">
+            <div class="form-group">
+                <label for="nombre">Nombre <span class="required">*</span></label>
+                <input type="text" id="nombre" name="nombre" required maxlength="100" value="Electrónica">
+                <span class="help-text">Máximo 100 caracteres</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="slug">Slug (URL amigable)</label>
+                <input type="text" id="slug" name="slug" maxlength="120" value="electronica">
+                <span class="help-text">Se genera automáticamente si se deja vacío. Ej: tecnologia-electronica</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" maxlength="500">Productos electrónicos y tecnología</textarea>
+                <span class="help-text">Máximo 500 caracteres</span>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="icono">Icono/Emoji</label>
+                    <input type="text" id="icono" name="icono" maxlength="50" value="-">
+                    <span class="help-text">Puedes usar emojis para representar la categoría</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="orden">Orden de visualización</label>
+                    <input type="number" id="orden" name="orden" min="0" value="0">
+                    <span class="help-text">Número para ordenar (menor = más arriba)</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="color">Color (Hexadecimal)</label>
+                <div class="color-picker-wrapper">
+                    <input type="color" id="color" name="color" value="#3B82F6">
+                    <input type="text" id="color_text" value="#3B82F6" readonly>
+                </div>
+                <span class="help-text">Selecciona un color para identificar la categoría</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="categoria_padre_id">Categoría Padre (para subcategorías)</label>
+                <select id="categoria_padre_id" name="categoria_padre_id">
+                    <option value="">-- Ninguna (categoría principal) --</option>
+                    <option value="4">Ropa y Moda</option>
+                    <option value="7">Hogar y Jardín</option>
+                    <option value="8">Deportes</option>
+                    <option value="11">Libros y Educación</option>
+                </select>
+                <span class="help-text">Selecciona una categoría padre si esta será una subcategoría. No puedes seleccionarte a ti misma.</span>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="activo" name="activo" checked>
+                    <label for="activo">Categoría activa</label>
+                </div>
+                <span class="help-text">Las categorías inactivas no se mostrarán públicamente</span>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn btn-warning">💾 Actualizar Categoría</button>
+                <a href="demo-categorias.html" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Cargar datos según el ID de la URL
+        window.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            
+            if (id) {
+                cargarCategoria(id);
+            }
+        });
+        
+        function cargarCategoria(id) {
+            // Datos de ejemplo - En producción vendrían de la base de datos
+            const categorias = {
+                '1': {
+                    nombre: 'Electrónica',
+                    slug: 'electronica',
+                    descripcion: 'Productos electrónicos y tecnología',
+                    icono: '-',
+                    color: '#3B82F6',
+                    orden: 0,
+                    categoria_padre_id: '',
+                    activo: true
+                },
+                '4': {
+                    nombre: 'Ropa y Moda',
+                    slug: 'ropa-moda',
+                    descripcion: 'Ropa y accesorios de moda',
+                    icono: '-',
+                    color: '#EC4899',
+                    orden: 3,
+                    categoria_padre_id: '',
+                    activo: true
+                }
+            };
+            
+            const cat = categorias[id];
+            if (cat) {
+                document.getElementById('nombre').value = cat.nombre;
+                document.getElementById('slug').value = cat.slug;
+                document.getElementById('descripcion').value = cat.descripcion || '';
+                document.getElementById('icono').value = cat.icono || '';
+                document.getElementById('color').value = cat.color;
+                document.getElementById('color_text').value = cat.color;
+                document.getElementById('orden').value = cat.orden;
+                document.getElementById('categoria_padre_id').value = cat.categoria_padre_id;
+                document.getElementById('activo').checked = cat.activo;
+            }
+        }
+        
+        // Sincronizar color picker con texto
+        const colorPicker = document.getElementById('color');
+        const colorText = document.getElementById('color_text');
+        
+        colorPicker.addEventListener('input', function() {
+            colorText.value = this.value.toUpperCase();
+        });
+        
+        // Auto-generar slug desde el nombre
+        const nombreInput = document.getElementById('nombre');
+        const slugInput = document.getElementById('slug');
+        
+        nombreInput.addEventListener('input', function() {
+            if (!slugInput.value || slugInput.dataset.auto !== 'false') {
+                const slug = this.value
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+                slugInput.value = slug;
+                slugInput.dataset.auto = 'true';
+            }
+        });
+        
+        slugInput.addEventListener('input', function() {
+            this.dataset.auto = 'false';
+        });
+        
+        // Validación y envío del formulario
+        function actualizarCategoria(event) {
+            event.preventDefault();
+            
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                slug: document.getElementById('slug').value,
+                descripcion: document.getElementById('descripcion').value,
+                icono: document.getElementById('icono').value,
+                color: document.getElementById('color').value,
+                orden: document.getElementById('orden').value,
+                categoria_padre_id: document.getElementById('categoria_padre_id').value,
+                activo: document.getElementById('activo').checked
+            };
+            
+            // Validación básica
+            if (!formData.nombre) {
+                alert('❌ El nombre es obligatorio');
+                return;
+            }
+            
+            if (formData.nombre.length > 100) {
+                alert('❌ El nombre no puede tener más de 100 caracteres');
+                return;
+            }
+            
+            // Generar slug si está vacío
+            if (!formData.slug) {
+                formData.slug = formData.nombre
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-|-$/g, '');
+            }
+            
+            console.log('Datos a actualizar:', formData);
+            
+            // Simular actualización exitosa
+            let mensaje = '✅ Categoría actualizada exitosamente!\n\n';
+            mensaje += `Nombre: ${formData.nombre}\n`;
+            mensaje += `Slug: ${formData.slug}\n`;
+            mensaje += `Descripción: ${formData.descripcion || 'Sin descripción'}\n`;
+            mensaje += `Icono: ${formData.icono || 'Sin icono'}\n`;
+            mensaje += `Color: ${formData.color}\n`;
+            mensaje += `Orden: ${formData.orden}\n`;
+            mensaje += `Tipo: ${formData.categoria_padre_id ? 'Subcategoría' : 'Categoría Principal'}\n`;
+            mensaje += `Estado: ${formData.activo ? 'Activo' : 'Inactivo'}\n`;
+            
+            alert(mensaje);
+            
+            // Redirigir al listado
+            window.location.href = 'demo-categorias.html';
+        }
+        
+        // Contador de caracteres para descripción
+        const descripcionInput = document.getElementById('descripcion');
+        const helpText = descripcionInput.nextElementSibling;
+        
+        descripcionInput.addEventListener('input', function() {
+            const length = this.value.length;
+            helpText.textContent = `${length}/500 caracteres`;
+            
+            if (length > 450) {
+                helpText.style.color = '#EF4444';
+            } else {
+                helpText.style.color = '#6b7280';
+            }
+        });
+    </script>
+</body>
+</html>
