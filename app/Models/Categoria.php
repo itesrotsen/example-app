@@ -39,6 +39,11 @@ class Categoria extends Model
         'categoria_padre_id' => 'integer',
     ];
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'category_id');
+    }
+
     /**
      * Boot del modelo para generar slug automáticamente
      */

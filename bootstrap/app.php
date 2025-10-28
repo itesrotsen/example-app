@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\AuthUserValidation;
+use App\Http\Middleware\isAdminValidation;
+use App\Http\Middleware\isGuessValidation;
 use Illuminate\Auth\AuthServiceProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'authUser' => AuthUserValidation::class
+            'authUser' => AuthUserValidation::class,
+            'isAdmin' => isAdminValidation::class,
+            'isGuess' => IsGuessValidation::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

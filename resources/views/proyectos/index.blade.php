@@ -19,6 +19,7 @@
     <tr>
         <th>ID</th>
         <th>Nombre</th>
+        <th>Contactos</th>
         <th>Descripción</th>
         <th>Fecha de Inicio</th>
         <th>Fecha de Fin</th>
@@ -32,6 +33,11 @@
         <tr>
             <td>{{ $proyecto->id }}</td>
             <td>{{ $proyecto->nombre }}</td>
+            <td>
+                @foreach($proyecto->contactos as $contact)
+                    {{$contact->nombre}} <br>
+                @endforeach
+            </td>
             <td>{{ $proyecto->descripcion }}</td>
             <td>{{ $proyecto->fecha_inicio }}</td>
             <td>{{ $proyecto->fecha_fin }}</td>

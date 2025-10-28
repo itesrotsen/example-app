@@ -12,6 +12,8 @@ class DashboardController extends Controller
 {
     public function index(Request $request): \Illuminate\Contracts\View\Factory|View
     {
+        $role = Auth::user()->roles()->first();
+        $hasContactViewPermission = $role->hasPermissionTo('contact.view');
         return view('welcome');
     }
 

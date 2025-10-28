@@ -23,6 +23,7 @@ class CreateTaskRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:5',
+            'category_id' => 'required|integer|exists:categorias,id',
             'description' => 'string|nullable',
             'completed' => 'boolean',
         ];

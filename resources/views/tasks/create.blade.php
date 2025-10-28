@@ -30,6 +30,17 @@
     </div>
 
     <div>
+        <label for="category_id">Categoria:</label>
+        <select name="category_id" id="category_id">
+            <option value="">Selecciona una opción</option>
+            @foreach($categorias as $categoria)
+                <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+            @endforeach
+        </select>
+    </div>
+
+
+    <div>
         <label>
             <input type="checkbox" name="completed" value="1" {{ old('completed') ? 'checked' : '' }}>
             Completed

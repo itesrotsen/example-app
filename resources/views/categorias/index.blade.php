@@ -37,6 +37,7 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>Task IDs</th>
         <th>Orden</th>
         <th>Icono</th>
         <th>Nombre</th>
@@ -54,6 +55,15 @@
     @forelse($categorias as $categoria)
         <tr>
             <td>{{ $categoria->id }}</td>
+            <td>
+                <li>
+                    @foreach($categoria->tasks as $task)
+                        <ul>
+                            {{$task->name}}
+                        </ul>
+                    @endforeach
+                </li>
+            </td>
             <td>{{ $categoria->orden }}</td>
             <td class="icono">{{ $categoria->icono ?? '📦' }}</td>
             <td class="{{ $categoria->categoria_padre_id ? 'subcategoria' : 'categoria-principal' }}">
@@ -84,7 +94,9 @@
                 <form action="{{ route('categorias.destroy', $categoria->id) }}" method="POST" style="display:inline">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar</button>
+                    <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar
+                    </button>
                 </form>
             </td>
         </tr>

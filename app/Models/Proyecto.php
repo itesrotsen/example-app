@@ -18,4 +18,8 @@ class Proyecto extends Model
         'fecha_fin',
         'presupuesto',
     ];
+
+    public function contactos(){
+        return $this->belongsToMany(Contacto::class, 'projects_contacts', 'project_id', 'contacto_id');
+    }
 }

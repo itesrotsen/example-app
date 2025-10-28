@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Categoria;
 use App\Models\Task;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class TaskController extends Controller
 
     public function createForm()
     {
-        return view('tasks.create');
+        $categorias = Categoria::all();
+        return view('tasks.create')->with(['categorias' => $categorias]);
     }
 
     public function store(CreateTaskRequest $request)

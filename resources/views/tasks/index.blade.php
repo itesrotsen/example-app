@@ -19,6 +19,7 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Categoria</th>
         <th>Status</th>
         <th>Actions</th>
     </tr>
@@ -29,6 +30,7 @@
         <tr>
             <td>{{ $task->id }}</td>
             <td>{{ $task->name }}</td>
+            <td>{{ $task->category->nombre }}</td>
             <td>{{ $task->completed ? 'Completed' : 'Pending' }}</td>
             <td>
                 <a href="#">View</a>
@@ -42,7 +44,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="4">No tasks found</td>
+            <td colspan="5">No tasks found</td>
         </tr>
     @endforelse
     </tbody>

@@ -18,4 +18,9 @@ class Contacto extends Model
         'telefono',
         'direccion',
     ];
+
+    public function proyectos()
+    {
+        return $this->belongsToMany(Proyecto::class, 'projects_contacts', 'contacto_id', 'proyecto_id');
+    }
 }

@@ -20,6 +20,14 @@
     @csrf
 
     <div>
+        <select multiple name="contacto_ids">
+            @foreach($contactos as $contacto)
+                <option value="{{$contacto->id}}">{{$contacto->nombre}}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div>
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" required>
     </div>

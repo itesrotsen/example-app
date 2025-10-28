@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contacto;
 use App\Models\Proyecto;
 use App\Http\Requests\StoreProyectoRequest;
 use App\Http\Requests\UpdateProyectoRequest;
@@ -19,12 +20,22 @@ class ProyectoController extends Controller
         return view('proyectos.index')->with(['proyectos' => $proyectos]);
     }
 
+    public function many(Request $request)
+    {
+        $proyecto =Proyecto::where('id', 2)->first();
+        //$proyecto->contactos()->attach([1,2,3,4]);
+        $proyecto->contactos()->detach([1,4]);
+
+        dd($proyecto);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('proyectos.create');
+        $contactos = Contacto::all();
+        return view('proyectos.create')->with(['contactos' => $contactos]);
     }
 
     /**
@@ -32,6 +43,7 @@ class ProyectoController extends Controller
      */
     public function store(StoreProyectoRequest $request)
     {
+        dd($request);
         $proyectoData = $request->validated();
         $proyecto = new Proyecto();
         $proyecto->fill($proyectoData);
