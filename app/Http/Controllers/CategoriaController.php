@@ -5,21 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Http\Requests\StoreCategoriaRequest;
 use App\Http\Requests\UpdateCategoriaRequest;
+use App\Repositories\CategoryRepository\CategoryRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
+    private $categoriaRepository;
+
+    public function __construct(CategoryRepository $categoriaRepository)
+    {
+        $this->categoriaRepository = $categoriaRepository;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index(): \Illuminate\Contracts\View\Factory|View
     {
         // Obtener todas las categorías ordenadas
-        $categorias = Categoria::with('categoriaPadre')
-            ->ordenadas()
-            ->get();
-            
+        $categorias = $this->categoriaRepository->allByMainCategory();
+
         return view('categorias.index')->with(['categorias' => $categorias]);
     }
 
@@ -29,11 +36,7 @@ class CategoriaController extends Controller
     public function create()
     {
         // Obtener solo categorías principales para el select de categoría padre
-        $categorias = Categoria::principales()
-            ->activas()
-            ->ordenadas()
-            ->get();
-            
+        $categorias = $this->categoriaRepository->principalCategories();
         return view('categorias.create', compact('categorias'));
     }
 
@@ -43,12 +46,12 @@ class CategoriaController extends Controller
     public function store(StoreCategoriaRequest $request)
     {
         $categoriaData = $request->validated();
-        
+
         // Crear la categoría
         $categoria = new Categoria();
         $categoria->fill($categoriaData);
         $categoria->save();
-        
+
         return redirect()
             ->route('categorias.index')
             ->with('success', 'Categoría creada exitosamente.');
@@ -61,7 +64,7 @@ class CategoriaController extends Controller
     {
         // Cargar relaciones
         $categoria->load(['categoriaPadre', 'subcategorias']);
-        
+
         return view('categorias.show')->with(['categoria' => $categoria]);
     }
 
@@ -76,7 +79,7 @@ class CategoriaController extends Controller
             ->activas()
             ->ordenadas()
             ->get();
-            
+
         return view('categorias.edit', compact('categoria', 'categorias'));
     }
 
@@ -86,11 +89,11 @@ class CategoriaController extends Controller
     public function update(UpdateCategoriaRequest $request, Categoria $categoria)
     {
         $categoriaData = $request->validated();
-        
+
         // Actualizar la categoría
         $categoria->fill($categoriaData);
         $categoria->save();
-        
+
         return redirect()
             ->route('categorias.index')
             ->with('success', 'Categoría actualizada exitosamente.');
@@ -107,9 +110,9 @@ class CategoriaController extends Controller
                 ->route('categorias.index')
                 ->with('error', 'No se puede eliminar una categoría que tiene subcategorías.');
         }
-        
+
         $categoria->delete();
-        
+
         return redirect()
             ->route('categorias.index')
             ->with('success', 'Categoría eliminada exitosamente.');
