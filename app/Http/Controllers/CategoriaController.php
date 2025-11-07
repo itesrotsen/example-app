@@ -6,16 +6,19 @@ use App\Models\Categoria;
 use App\Http\Requests\StoreCategoriaRequest;
 use App\Http\Requests\UpdateCategoriaRequest;
 use App\Repositories\CategoryRepository\CategoryRepository;
+use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
     private $categoriaRepository;
+    private $categoryService;
 
-    public function __construct(CategoryRepository $categoriaRepository)
+    public function __construct(CategoryService    $categoryService,
+                                CategoryRepository $categoriaRepository)
     {
         $this->categoriaRepository = $categoriaRepository;
+        $this->categoryService = $categoryService;
     }
 
 
@@ -25,8 +28,7 @@ class CategoriaController extends Controller
     public function index(): \Illuminate\Contracts\View\Factory|View
     {
         // Obtener todas las categorías ordenadas
-        $categorias = $this->categoriaRepository->allByMainCategory();
-
+        $categorias = $this->categoryService->allByMainCategory();
         return view('categorias.index')->with(['categorias' => $categorias]);
     }
 
@@ -46,15 +48,12 @@ class CategoriaController extends Controller
     public function store(StoreCategoriaRequest $request)
     {
         $categoriaData = $request->validated();
-
-        // Crear la categoría
-        $categoria = new Categoria();
-        $categoria->fill($categoriaData);
-        $categoria->save();
-
-        return redirect()
-            ->route('categorias.index')
-            ->with('success', 'Categoría creada exitosamente.');
+        if ($this->categoryService->store($categoriaData)) {
+            return redirect()
+                ->route('categorias.index')
+                ->with('success', 'Categoría creada exitosamente.');
+        }
+        return back()->withErrors($this->categoryService->bagErrors);
     }
 
     /**
